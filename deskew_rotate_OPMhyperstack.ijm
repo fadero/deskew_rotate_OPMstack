@@ -5,9 +5,10 @@
 
 //user-defined parameters
 rotation_angle_deg = 26.7; // light sheet rotation angle (_\) in degrees
-cl_device = ""; //openCL-compatible device for CLIJ2. Selects default.
+cl_device = ""; // openCL compatible device, e.g. GPU. selects default.
 project = true; // outputs three orthogonal max intensity projections
 conserve_memory = false; // slows the code down slightly
+mode_32bit = false; // if image isn't 32 bit, upconvert for accuracy
 
 // start CLIJ2 on GPU, clear memory
 run("CLIJ2 Macro Extensions", "cl_device="+cl_device);
@@ -16,8 +17,11 @@ run("Collect Garbage");
 
 // get current image info
 getDimensions(im_width, im_height, im_channels, im_depth, im_frames);
-// size of 5D image
 bit_depth = bitDepth(); // bit depth of the image
+if (mode_32bit && bit_depth != 32) {
+	run("32-bit");
+	bit_depth = 32;
+}
 image_name = getInfo("window.title"); // set input image
 rename("image1");
 image1 = "image1";
@@ -48,7 +52,11 @@ new_depth =  Math.ceil(height_scale*im_height*
 // iterate over all timepoints
 for (t = 0; t < im_frames; t++) { 
 	selectWindow(image1);
-	Stack.setFrame(1); // set to first timepoint
+	if (conserve_memory) {
+		Stack.setFrame(1); // set to first timepoint
+	} else {
+		Stack.setFrame(t+1);
+	}
 	
 	// iterate over all channels
 	for (c = 0; c < im_channels; c++) { 
