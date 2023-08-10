@@ -8,7 +8,7 @@ rotation_angle_deg = 26.7; // light sheet rotation angle (_\) in degrees
 cl_device = ""; // openCL compatible device, e.g. GPU. selects default.
 project = true; // outputs three orthogonal max intensity projections
 conserve_memory = false; // slows the code down slightly
-mode_32bit = false; // if image isn't 32 bit, upconvert for accuracy
+mode_32bit = false; // if image isn't 32 bit, upconvert for precision
 
 // start CLIJ2 on GPU, clear memory
 run("CLIJ2 Macro Extensions", "cl_device="+cl_device);
