@@ -42,12 +42,12 @@ depth_scale = px_min/px_depth;
 
 // calculate the new image size
 new_width  = Math.ceil(width_scale*	im_width); // doesn't change
-new_height = Math.ceil(height_scale*im_height*
-			 		   Math.cos(rotation_angle_rad) + 
-			 		   im_depth*depth_scale / 
-			 		   Math.sin(rotation_angle_rad)); // new Y dimension
-new_depth =  Math.ceil(height_scale*im_height*
-			 		   Math.sin(rotation_angle_rad)); // new Z dimension
+new_height = Math.ceil(	height_scale*im_height*
+			Math.cos(rotation_angle_rad) + 
+			im_depth*depth_scale / 
+			Math.sin(rotation_angle_rad)); // new Y dimension
+new_depth =  Math.ceil(	height_scale*im_height*
+			Math.sin(rotation_angle_rad)); // new Z dimension
 
 // iterate over all timepoints
 for (t = 0; t < im_frames; t++) { 
@@ -73,10 +73,10 @@ for (t = 0; t < im_frames; t++) {
 							bit_depth);
 		
 		// deskew, scale if necessary, rotate, then reposition image
-		transform = "shearYZ=-"+deskew_step+" scaleX="+width_scale+
-					" scaleY="+height_scale+" scaleZ="+depth_scale+
-					" rotateX=-"+rotation_angle_deg+" translateZ=-"+
-					new_depth;
+		transform = 	"shearYZ=-"+deskew_step+" scaleX="+width_scale+
+				" scaleY="+height_scale+" scaleZ="+depth_scale+
+				" rotateX=-"+rotation_angle_deg+" translateZ=-"+
+				new_depth;
 		Ext.CLIJ2_affineTransform3D(image1, image2, transform); 
 		
 		// perform optional orthogonal projections 
