@@ -36,9 +36,9 @@ deskew_step = px_deskew/px_height;
 // calculate scaling factors 
 px_min = minOf(px_depth, minOf(px_width, px_height)); 
 // smallest pixel dimension; this will be the final voxel size
-width_scale = px_min/px_width; // calculate each dimension scale factor
-height_scale = px_min/px_height;
-depth_scale = px_min/px_depth;
+width_scale = 	px_width/px_min; // calculate each dimension scale factor
+height_scale = 	px_height/px_min;
+depth_scale = 	px_depth/px_min;
 
 // calculate the new image size
 new_width  = Math.ceil(width_scale*	im_width); // doesn't change
